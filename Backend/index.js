@@ -1,8 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const mysql =  require('mysql');
 const app = express();
 const port = 3000;
+
 
 app.use(cors());
 app.use(express.json());
@@ -82,6 +85,53 @@ app.post('/stockout', (req, res) => {
     });
 });
 
+
+// Login Route for MySQL
+app.post('/api/login', (req, res) => {
+    const { email, password } = req.body;
+    console.log("Login attempt received for:", email);
+
+    const sql = 'SELECT * FROM users WHERE email = ?';
+    db.query(sql, [email], (err, results) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        // Check if user exists
+        if (results.length === 0) {
+            console.log("Login Failed: User not found");
+            return res.status(400).json({ success: false, message: 'User not found' });
+        }
+
+        const user = results[0];
+
+        // Match password (using plain text since your signup route saves plain text)
+        if (password !== user.password) {
+            console.log("Login Failed: Incorrect password");
+            return res.status(400).json({ success: false, message: 'Invalid password' });
+        }
+
+        // Create token
+        try {
+            const token = jwt.sign(
+                { id: user.id, email: user.email },
+                'your_super_secret_key_123', // Hardcoded secret for stability
+                { expiresIn: '1h' }
+            );
+
+            console.log("Login Successful for:", email);
+            res.json({
+                success: true,
+                token: token,
+                user: { id: user.id, email: user.email, username: user.username }
+            });
+        } catch (jwtErr) {
+            console.error("JWT Error:", jwtErr);
+            res.status(500).json({ success: false, message: 'Error generating token' });
+        }
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
