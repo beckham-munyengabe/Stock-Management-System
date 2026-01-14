@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';    
 import { Package, TrendingUp, TrendingDown, AlertCircle, Search, Filter, Plus, Download, Bell } from 'lucide-react';
+import Photo from '../images/lolo.png';
 
 export default function StockDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,13 +20,12 @@ export default function StockDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 font-sans">
-      {/* Header */}
       <header className="bg-white/90 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-lg">
-                <Package size={24} className="text-white" />
+              <div>
+                <img src={Photo} alt="Logo" className="h-10 w-10 rounded-xl" />
               </div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Stock Manager
@@ -36,10 +36,9 @@ export default function StockDashboard() {
                 <Bell size={20} />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
-              <button className="flex items-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 text-white
-              rounded-lg transition-colors">
-                <Download size={20} className="text-slate-700" />
-                <span className="text-slate-700 font-medium"><Link to='/login'>Logout</Link></span>
+              <button className="flex items-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
+                <Download size={20} />
+                <span className="font-medium"><Link to="/login">Logout</Link></span>
               </button>
             </div>
           </div>

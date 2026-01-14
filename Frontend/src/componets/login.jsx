@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { Package, Lock, Mail, Loader2 } from 'lucide-react';
@@ -31,17 +32,23 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 max-w-sm w-full p-6 transition-all">
+
+        
         
         {/* Header */}
         <div className="text-center mb-6">
+        
           <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-50 text-blue-600 rounded-lg mb-3">
             <Package size={28} />
           </div>
+          
           <h1 className="text-xl font-bold text-slate-900">Welcome Back</h1>
           <p className="text-xs text-slate-500 mt-1">Manage your inventory efficiently</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
+
+          
           <div className="relative">
             <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Email</label>
             <div className="relative mt-1">
